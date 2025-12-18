@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className="pokedex-container">
-      <h1>Pocket Search</h1>
+      <h1>PocketSearch</h1>
       
       <div className="search-interface">
         <input 
