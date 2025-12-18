@@ -1,34 +1,59 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import axios from 'axios'
+import PokemonCard from './components/PokemonCard'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pokemonName, setPokemonName] = useState('')
+  const [pokemonData, setPokemonData] = useState(null)
+  const [error, setError] = useState('')
+
+  const fetchPokemon = async () => {
+    if (!pokemonName) return
+    try {
+      setError('')
+      
+      const response = await axios.get(`http://localhost:3000/pokemon/${pokemonName}`)
+      
+    
+      setPokemonData(response.data) 
+      console.log("Data loaded into State:", response.data)
+    
+    } catch (err) {
+      setPokemonData(null)
+      setError(`${err}\nCheck Spelling`)
+    }
+  }
+
+  const clearData = () => {
+      setPokemonName('');
+      setPokemonData(null);
+      setError('');
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="pokedex-container">
+      <h1>Pocket Search</h1>
+      
+      <div className="search-interface">
+        <input 
+          type="text" 
+          placeholder="Enter Pokemon Name" 
+          value={pokemonName}
+          onChange={(e) => setPokemonName(e.target.value)}
+        />
+        <div className="search-btn">
+        <button onClick={fetchPokemon}>SEARCH</button>
+        <button className="clear-btn" onClick={clearData}>CLEAR</button>
+        </div>
+
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      {error && <p className="error-msg">{error}</p>}
+
+      <PokemonCard data={pokemonData} />
+      
+    </div>
   )
 }
 
