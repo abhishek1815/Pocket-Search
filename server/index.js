@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-// Middleware (The Gatekeepers)
+
 app.use(cors()); 
 app.use(express.json());
 
