@@ -125,3 +125,7 @@ PocketCodex/
 * **Dockerization:** Containerizing both client and server for consistent deployment environments.
 * **Persistent Storage:** Migrating from in-memory caching to Redis for scalability across server restarts.
 * **Unit Testing:** Implementing Jest/Vitest for logic verification.
+
+
+
+-- abhi
